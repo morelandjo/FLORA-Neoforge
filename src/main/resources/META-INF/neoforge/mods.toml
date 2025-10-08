@@ -1,0 +1,30 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="All Rights Reserved"
+
+[[mods]]
+modId="flora"
+version="${file.jarVersion}"
+displayName="FLORA"
+authors="Pixlepix, Converted by Returns"
+description='''
+Fluids and Liquids on Ridiculous Armor - Adds customizable fluid-powered armor with unique effects based on fluid combinations.
+'''
+logoFile="logo.png"
+
+[[mixins]]
+config="flora.mixins.json"
+
+[[dependencies.flora]]
+    modId="neoforge"
+    type="required"
+    versionRange="[21.0,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.flora]]
+    modId="minecraft"
+    type="required"
+    versionRange="[1.21,1.22)"
+    ordering="NONE"
+    side="BOTH"

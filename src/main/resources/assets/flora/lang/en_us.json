@@ -1,0 +1,36 @@
+{
+  "itemGroup.flora": "FLORA",
+
+  "item.flora.coal_bucket": "Liquefacted Coal Bucket",
+  "item.flora.pyrotheum_bucket": "Blazing Pyrotheum Bucket",
+  "item.flora.cryotheum_bucket": "Gelid Cryotheum Bucket",
+  "item.flora.mana_bucket": "Destabilized Mana Bucket",
+  "item.flora.ender_bucket": "Resonant Ender Bucket",
+  "item.flora.redstone_bucket": "Destabilized Redstone Bucket",
+  "item.flora.glowstone_bucket": "Energized Glowstone Bucket",
+
+  "block.flora.infuser": "Fluid Infuser",
+
+  "item.flora.leadstone_helmet": "Leadstone Helmet",
+  "item.flora.leadstone_chestplate": "Leadstone Chestplate",
+  "item.flora.leadstone_leggings": "Leadstone Leggings",
+  "item.flora.leadstone_boots": "Leadstone Boots",
+
+  "item.flora.hardened_helmet": "Hardened Helmet",
+  "item.flora.hardened_chestplate": "Hardened Chestplate",
+  "item.flora.hardened_leggings": "Hardened Leggings",
+  "item.flora.hardened_boots": "Hardened Boots",
+
+  "item.flora.redstone_helmet": "Redstone Helmet",
+  "item.flora.redstone_chestplate": "Redstone Chestplate",
+  "item.flora.redstone_leggings": "Redstone Leggings",
+  "item.flora.redstone_boots": "Redstone Boots",
+
+  "item.flora.resonant_helmet": "Resonant Helmet",
+  "item.flora.resonant_chestplate": "Resonant Chestplate",
+  "item.flora.resonant_leggings": "Resonant Leggings",
+  "item.flora.resonant_boots": "Resonant Boots",
+
+  "container.flora.infuser": "Fluid Infuser",
+  "gui.FI": "Fluid Infuser"
+}

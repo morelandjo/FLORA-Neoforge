@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//d/MinecraftMods/other mods gits/FLORA/**)",
+      "Read(//d/MinecraftMods/Returns Mods/Random-Things-Returns-1.21.1-Neo/src/main/resources/assets/**)",
+      "Read(//d/MinecraftMods/Returns Mods/Random-Things-Returns-1.21.1-Neo/src/main/resources/assets/randomthings/textures/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "flora:block/machine_bottom",
+    "up": "flora:block/machine_top",
+    "north": "flora:block/machine_face",
+    "south": "flora:block/machine_side",
+    "east": "flora:block/machine_side",
+    "west": "flora:block/machine_side",
+    "particle": "flora:block/machine_side"
+  }
+}

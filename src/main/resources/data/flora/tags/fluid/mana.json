@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "flora:mana",
+    "flora:flowing_mana"
+  ]
+}
