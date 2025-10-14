@@ -6,6 +6,8 @@ import flora.core.logic.ArmorEffectsManager;
 import flora.core.logic.EnumArmorQuality;
 import flora.core.logic.EnumArmorType;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -33,10 +35,22 @@ public class ItemArmorFLORA extends ArmorItem {
     public ItemArmorFLORA(EnumArmorType type, EnumArmorQuality quality) {
         super(getArmorMaterial(quality), type.armorType,
             new Item.Properties()
-                .durability(0)
                 .stacksTo(1));
         this.floraType = type;
         this.quality = quality;
+    }
+
+    @Override
+    public int getMaxDamage(ItemStack stack) {
+        // Return a very high value to effectively make armor indestructible
+        // Original mod used Integer.MAX_VALUE through ISpecialArmor
+        return Integer.MAX_VALUE;
+    }
+
+    @Override
+    public boolean isDamaged(ItemStack stack) {
+        // Never consider the armor damaged
+        return false;
     }
 
     private static Holder<ArmorMaterial> getArmorMaterial(EnumArmorQuality quality) {
@@ -106,7 +120,9 @@ public class ItemArmorFLORA extends ArmorItem {
             var tanksList = nbt.getList("FloraTanks", 10); // 10 = TAG_COMPOUND
             for (int i = 0; i < tanksList.size(); i++) {
                 var tankNBT = tanksList.getCompound(i);
-                FluidStack fluid = FluidStack.parse(net.minecraft.core.HolderLookup.Provider.create(java.util.stream.Stream.empty()), tankNBT).orElse(FluidStack.EMPTY);
+                // Use built-in registries for fluid lookup
+                var lookupProvider = createBuiltInLookupProvider();
+                FluidStack fluid = FluidStack.parse(lookupProvider, tankNBT).orElse(FluidStack.EMPTY);
                 if (!fluid.isEmpty()) {
                     tanks.add(new FluidTankData(fluid, quality.storage));
                 }
@@ -122,8 +138,8 @@ public class ItemArmorFLORA extends ArmorItem {
         var tanksList = new net.minecraft.nbt.ListTag();
         for (FluidTankData tank : tanks) {
             if (!tank.fluid.isEmpty()) {
-                var tankNBT = new net.minecraft.nbt.CompoundTag();
-                tank.fluid.save(net.minecraft.core.HolderLookup.Provider.create(java.util.stream.Stream.empty()), tankNBT);
+                var lookupProvider = createBuiltInLookupProvider();
+                var tankNBT = tank.fluid.save(lookupProvider);
                 tanksList.add(tankNBT);
             }
         }
@@ -146,13 +162,21 @@ public class ItemArmorFLORA extends ArmorItem {
 
     private String[][] getDescriptions() {
         return new String[][]{
-            {"Shoot Fireballs", "Explode burning enemies", "Mining Speed", "Pacify Mobs", "Teleport attacking enemies", "Damaging Pulse", "Ignite enemies"},
-            {"Explode burning enemies", "Increase Fall Damage", "Slowness", "Underwater Breath", "Reduced fall damage", "Igniting pulse", "Protection from lava"},
-            {"Mining Speed", "Slowness", "Underwater breath", "Hunger Loss", "Teleport away when injured", "Slowness pulse", "Damage in cold environments"},
-            {"Pacify Mobs", "Underwater Breath", "Hunger Loss", "Antidote", "Long Jump", "Antidote pulse", "Hunger gain"},
-            {"Teleport attacking enemies", "Reduced fall damage", "Teleport away when injured", "Long Jump", "Blink", "Teleportation pulse", "Fall through ground when sneaking"},
-            {"Damaging Pulse", "Igniting pulse", "Slowness pulse", "Antidote pulse", "Teleportation pulse", "Fluctuating max health", "Self-Combustion"},
-            {"Ignite enemies", "Protection from lava", "Damage in cold environments", "Hunger gain", "Fall through ground when sneaking", "Self-Combustion", "Night Vision"}
+            {"(No Effect)", "Explode burning enemies", "Mining Fatigue", "Confuse Mobs", "Teleport attacking enemies", "Coal Pulse", "Ignite enemies"},
+            {"Explode burning enemies", "Increased Fall Damage", "Slowness", "(No Effect)", "Reduced fall damage", "Fire Pulse", "Fire Resistance"},
+            {"Mining Fatigue", "Slowness", "Restore Air", "Hunger Loss", "Teleport when hurt", "Slow Pulse", "Cold Damage"},
+            {"Confuse Mobs", "(No Effect)", "Hunger Loss", "Cure Effects", "Jump Boost", "Mana Pulse", "Hunger Restore"},
+            {"Teleport attacking enemies", "Reduced fall damage", "Teleport when hurt", "Jump Boost", "(No Effect)", "Ender Pulse", "(No Effect)"},
+            {"Coal Pulse", "Fire Pulse", "Slow Pulse", "Mana Pulse", "Ender Pulse", "Fluctuating Health", "Explosion Risk"},
+            {"Ignite enemies", "Fire Resistance", "Cold Damage", "Hunger Restore", "(No Effect)", "Explosion Risk", "Night Vision"}
         };
+    }
+
+    /**
+     * Creates a HolderLookup.Provider from the built-in registries.
+     * This is used for FluidStack serialization since fluids are in built-in registries.
+     */
+    private static HolderLookup.Provider createBuiltInLookupProvider() {
+        return RegistryAccess.fromRegistryOfRegistries(net.minecraft.core.registries.BuiltInRegistries.REGISTRY);
     }
 }

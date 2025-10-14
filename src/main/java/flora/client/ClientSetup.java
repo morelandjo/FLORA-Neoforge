@@ -36,6 +36,7 @@ public class ClientSetup {
     private static void registerFluidRenderProperties(RegisterClientExtensionsEvent event, String name, FluidType fluidType) {
         final ResourceLocation stillTexture = ResourceLocation.fromNamespaceAndPath(ConstantsFLORA.MOD_ID, "block/" + name + "_still");
         final ResourceLocation flowingTexture = ResourceLocation.fromNamespaceAndPath(ConstantsFLORA.MOD_ID, "block/" + name + "_flow");
+        final ResourceLocation overlayTexture = ResourceLocation.withDefaultNamespace("block/water_overlay");
 
         event.registerFluidType(new IClientFluidTypeExtensions() {
             @Override
@@ -46,6 +47,17 @@ public class ClientSetup {
             @Override
             public ResourceLocation getFlowingTexture() {
                 return flowingTexture;
+            }
+
+            @Override
+            public ResourceLocation getOverlayTexture() {
+                return overlayTexture;
+            }
+
+            @Override
+            public int getTintColor() {
+                // Use white tint (no color modification) to show textures as-is
+                return 0xFFFFFFFF;
             }
         }, fluidType);
     }

@@ -1,5 +1,6 @@
 package flora.core.block;
 
+import flora.core.FLORA;
 import flora.core.gui.MenuInfuser;
 import flora.core.init.FLORABlockEntities;
 import flora.core.init.FLORAFluids;
@@ -62,6 +63,9 @@ public class BlockEntityInfuser extends BaseContainerBlockEntity {
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, BlockEntityInfuser blockEntity) {
+        // Only try every 10 ticks to prevent spam and performance issues
+        if (level.getGameTime() % 10 != 0) return;
+
         ItemStack bucketStack = blockEntity.getItem(4);
         if (!bucketStack.isEmpty()) {
             FluidStack fluidStack = getFluidFromItem(bucketStack);
@@ -81,7 +85,7 @@ public class BlockEntityInfuser extends BaseContainerBlockEntity {
 
         if (stack.getItem() instanceof BucketItem bucketItem) {
             Fluid fluid = bucketItem.content;
-            if (fluid != null && ArmorEffectsManager.getFluidMap().containsKey(fluid)) {
+            if (fluid != null && ArmorEffectsManager.isSupportedFluid(fluid)) {
                 return new FluidStack(fluid, 1000);
             }
         }
@@ -90,12 +94,18 @@ public class BlockEntityInfuser extends BaseContainerBlockEntity {
     }
 
     public boolean fillArmorWithFluid(FluidStack fluid, boolean doFill) {
-        if (fluid == null || fluid.isEmpty()) return false;
+        if (fluid == null || fluid.isEmpty()) {
+            return false;
+        }
 
         for (int i = 0; i < 4; i++) {
             ItemStack armorStack = getItem(i);
+
             if (!armorStack.isEmpty() && armorStack.getItem() instanceof ItemArmorFLORA armorItem) {
-                int space = armorItem.getFluidCapacity() - armorItem.getTotalFluidAmount(armorStack);
+                int currentAmount = armorItem.getTotalFluidAmount(armorStack);
+                int capacity = armorItem.getFluidCapacity();
+                int space = capacity - currentAmount;
+
                 if (space > 0) {
                     List<ItemArmorFLORA.FluidTankData> tanks = armorItem.getFluidTanks(armorStack);
 
@@ -109,6 +119,7 @@ public class BlockEntityInfuser extends BaseContainerBlockEntity {
 
                             if (doFill) {
                                 armorItem.setFluidTanks(armorStack, tanks);
+                                setItem(i, armorStack);
                             }
 
                             if (fluid.isEmpty()) {
@@ -128,6 +139,7 @@ public class BlockEntityInfuser extends BaseContainerBlockEntity {
 
                         if (doFill) {
                             armorItem.setFluidTanks(armorStack, tanks);
+                            setItem(i, armorStack);
                         }
 
                         return true;

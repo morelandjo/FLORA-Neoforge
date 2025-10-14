@@ -64,6 +64,13 @@ public class ArmorEffectsManager {
         return -1;
     }
 
+    /**
+     * Checks if a fluid is supported by the armor effects system.
+     */
+    public static boolean isSupportedFluid(Fluid fluid) {
+        return getFluidTypeIndex(fluid) >= 0;
+    }
+
     public static float[][] getEffectMatrix(ItemStack[] armor) {
         float[] totalFluidCount = new float[7];
 
@@ -114,7 +121,8 @@ public class ArmorEffectsManager {
         if (fluidInteractionMatrix[6][6] > 0) {
             intensity = fluidInteractionMatrix[6][6];
             if (rand.nextInt(100) < intensity) {
-                player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 10, 0, false, false));
+                // Use 240 ticks (12 seconds) to prevent flickering transition effect
+                player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 240, 0, false, false));
             }
         }
 

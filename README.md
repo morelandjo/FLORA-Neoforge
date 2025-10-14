@@ -1,6 +1,5 @@
 # FLORA - Fluids and Liquids on Ridiculous Armor
 
-**Version:** 2.0.0 for NeoForge 1.21.1
 **Original Author:** Pixlepix
 **Textures:** Blorph
 **NeoForge Conversion:** Vodmordia
@@ -23,10 +22,10 @@ FLORA adds 7 fluids:
 
 ### Armor System
 Four tiers of armor (each with helmet, chestplate, leggings, boots):
-- **Leadstone** 
-- **Hardened** 
-- **Redstone**
-- **Resonant**
+- **Leadstone** - 250 mB capacity
+- **Hardened** - 2,500 mB capacity
+- **Redstone** - 25,000 mB capacity
+- **Resonant** - 250,000 mB capacity
 
 Each armor piece can hold fluids in internal tanks. The amount and combination of fluids determines the effects you receive.
 
@@ -35,68 +34,72 @@ Use the Infuser to fill your armor pieces with fluids. Place armor and fluid buc
 
 ## Fluid Effects
 
-### Single Fluid Effects (Same fluid in multiple pieces)
+The effects you receive are based on the **combination** and **amount** of fluids across all your armor pieces. Effects scale with the amount of fluid - more fluid = stronger effects!
 
-- **Glowstone + Glowstone**: Night Vision
-- **Redstone + Redstone**: Fluctuating max health (changes every 30 seconds)
-- **Mana + Mana**: Chance to cure all potion effects
-- **Cryotheum + Cryotheum**: Chance to restore air supply
+### Single Fluid Effects (Same fluid across multiple armor pieces)
 
-### Combination Effects (Different fluids mixed)
+- **Glowstone**: Night Vision
+- **Redstone**: Fluctuating max health (randomizes every 30 seconds)
+- **Mana**: Chance to cure all potion effects
+- **Cryotheum**: Chance to restore air supply when drowning
+- **Pyrotheum**: Increased fall damage
+
+### Combination Effects (Mixing different fluids)
 
 #### Beneficial Effects
+- **Pyrotheum + Mana**: Movement Speed boost
+- **Ender + Mana**: Jump Boost
 - **Glowstone + Mana**: Chance to restore hunger
-- **Pyrotheum + Mana**: Movement speed boost
-- **Ender + Mana**: Jump boost
-- **Cryotheum + Ender**: Teleport to safety when health is low
 
-#### Attack Effects (When wearing armor)
-- **Glowstone + Coal**: Set enemies on fire when attacking
-- **Coal + Pyrotheum**: Explode burning enemies when attacking
-- **Coal + Mana**: Confuse nearby mobs (they attack each other)
+#### Attack Effects (When you attack enemies)
+- **Coal + Glowstone**: Set enemies on fire
+- **Coal + Pyrotheum**: Explode burning enemies
 
-#### Pulse Projectiles (Fire projectiles at nearby enemies)
-- **Redstone + Mana**: Mana pulse
-- **Redstone + Coal**: Coal pulse (sets fire)
+#### Pulse Projectiles (Automatically fire at nearby enemies)
+- **Redstone + Mana**: Mana pulse (regeneration + minor damage)
+- **Redstone + Coal**: Coal pulse (sets enemies on fire)
 - **Redstone + Pyrotheum**: Pyrotheum pulse (damage)
 - **Redstone + Cryotheum**: Slow pulse (slows enemies)
-- **Redstone + Ender**: Ender pulse
+- **Redstone + Ender**: Ender pulse (teleportation effect)
 
-#### Defensive Effects
-- **Pyrotheum + Pyrotheum**: Fire resistance
-- **Coal + Coal**: Chance to drop coal when hurt
-- **Ender + Ender**: Chance to teleport attacker away
-- **Pyrotheum + Glowstone**: Damage reduction from fire
-- **Pyrotheum + Ender**: Chance to extinguish self when on fire
-- **Coal + Ender**: No fall damage
+#### Defensive Effects (When you take damage)
+- **Cryotheum + Ender**: Teleport to safety when health drops below 4 hearts (cancels damage!)
+- **Coal + Ender**: Teleport mob attacker away
+- **Pyrotheum + Glowstone**: Damage reduction from fire sources (with cooldown)
+- **Ender + Pyrotheum**: Reduced fall damage
+
+#### Utility Effects
+- **Coal + Mana**: Confuse nearby mobs (makes them attack each other)
 
 #### Negative Effects
-- **Redstone + Glowstone**: Chance to explode
-- **Pyrotheum + Cryotheum**: Movement slowness
-- **Coal + Cryotheum**: Mining fatigue
-- **Cryotheum + Mana**: Hunger loss
-- **Glowstone + Cryotheum**: Take damage in cold biomes
+- **Redstone + Glowstone**: Rare chance to cause massive explosion
+- **Pyrotheum + Cryotheum**: Movement Slowness
+- **Coal + Cryotheum**: Mining Fatigue (Dig Slowdown)
+- **Cryotheum + Mana**: Hunger loss over time
+- **Cryotheum + Glowstone**: Take damage in cold biomes
 
-## Getting Started
 
-**Note:** Currently all items are available in Creative mode only. Survival crafting recipes are not yet implemented.
+## Unimplemented Effects (Future TODO)
 
-1. Get armor pieces from the FLORA creative tab
-2. Get fluid buckets from the creative tab
-3. Place an Infuser block
-4. Put armor and fluid buckets in the Infuser
-5. Wait for the fluid to transfer
+These effects were listed in the original mod's tooltips but were never actually implemented by the original author. They remain as potential features for future development:
 
-## Tips
 
-- More fluid = stronger effects (effects scale with total fluid amount)
-- Mix different fluids across armor pieces for combination effects
-## Mod Compatibility
+- **Coal + Coal**: "Shoot Fireballs"
+- **Coal + Cryotheum**: "Mining Speed" - Tooltip claimed mining speed boost, but actual effect is Mining Fatigue (slowness)
+- **Pyrotheum + Cryotheum**: "Underwater Breath" - Was listed but actual effect is slowness
+- **Mana + Pyrotheum**: "Underwater Breath" - Was listed but actual effect is speed boost
+- **Ender + Ender**: "Blink" 
+- **Ender + Glowstone**: "Fall through ground when sneaking"
 
-FLORA uses **fluid tags** to detect fluids in armor, which means it can work with fluids from other mods!
+
+---
+
+**Note:** This mod depended on two mods originally, Thermal Expansion and Redstone Arsenal, which have not been ported to 1.21.1 Neoforge yet. This means playing with this mod in survival is possible, but you will need to make a datapack (or Kube JS) with your own custom recipes or acquisition methods for the fluids. There are no ways to get any of the things in this mod in a normal survival mode without doing that.
+
+
 
 ### For Players
-If another mod adds fluids with similar names (coal, pyrotheum, cryotheum, mana, ender, redstone, or glowstone), they will automatically work with FLORA's armor system if the mod developer adds them to the appropriate tags.
+FLORA uses **fluid tags** to detect fluids in armor. If another mod adds fluids with similar names (coal, pyrotheum, cryotheum, mana, ender, redstone, or glowstone), they will automatically work with FLORA's armor system if the mod developer adds them to the appropriate tags.
 
 ### For Mod Developers
 To make your fluids compatible with FLORA, add them to the appropriate fluid tags in your mod's data files:
@@ -122,12 +125,3 @@ Available FLORA fluid tags:
 
 Example: If your mod adds a "liquid fire" fluid, you could add it to `flora:pyrotheum` tag, and it would grant fire-related effects when used in FLORA armor.
 
-## Credits
-
-- **Original Mod:** FLORA by Pixlepix
-- **Textures:** Blorph (from original mod)
-- **Conversion:** Vodmordia
-
-## License
-
-MIT
